@@ -1,0 +1,31 @@
+{
+    "name": "escape_from_diddy",
+    "version": "1.0.0",
+    "description": "Projeto para prática de banco de dados, canvas html e javascript.",
+    "license": "ISC",
+    "author": "Henrique Rodrigues",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "run": "nodemon server.js"
+    },
+    "nodemonConfig": {
+        "watch": [
+            "*.js",
+            "*.html",
+            "*.css",
+            "*.json"
+        ],
+        "ignore": [
+            ".vscode",
+            "node_modules"
+        ]
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.14"
+    },
+    "dependencies": {
+        "express": "^5.2.1",
+        "mysql2": "^3.22.2"
+    }
+}
