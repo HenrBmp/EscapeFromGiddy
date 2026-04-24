@@ -28,8 +28,8 @@ router.get("/rank", RankControllers.getRanking);
 router.post("/rank", RankControllers.insertRecord);
 
 // =======================Arquivos estaticos=======================
-router.use("/styles", express.static("/public/styles"));
-router.use("/scripts", express.static("/public/scripts"));
-router.use("/media", express.static("/public/media"));
+router.use("/styles", express.static(join("public", "styles")));
+router.use("/scripts", express.static(join("public", "scripts")));
+router.use("/media", express.static(join("public", "media")));
 
 export default router;
