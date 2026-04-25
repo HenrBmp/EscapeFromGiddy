@@ -39,14 +39,12 @@ export default defineConfig([
     },
     {
         rules: {
-            indent: ['warn', 4],
+            indent: ['error', 4],
             semi: ['error', 'always'],
-        }
+            quote: ['error', 'single'],
+        },
     },
     {
-        extends: [
-            'google',
-            'prettier'
-        ]
-    }
+        extends: ['google', 'prettier'],
+    },
 ]);
