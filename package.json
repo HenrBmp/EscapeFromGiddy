@@ -7,7 +7,7 @@
     "type": "module",
     "main": "server.js",
     "scripts": {
-        "run": "nodemon server.js"
+        "dev": "nodemon server.js"
     },
     "nodemonConfig": {
         "watch": [
