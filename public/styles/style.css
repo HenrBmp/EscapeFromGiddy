@@ -8,6 +8,8 @@
 
 /* VARIÁVEIS */
 :root {
+    font-family: 'Pixelify Sans', 'Helvetica', sans-serif;
+    font-size: 14px;
     --preto: #1e1d1d;
     --rosa-escuro: #e75480;
     --rosa-fraco: #fe91a6;
@@ -15,11 +17,6 @@
     --amarelo: #e8dd54;
     --radius: 36px;
     --ease-in-out: cubic-bezier(0.5, 0, 0.5, 1);
-}
-
-body {
-    font-family: 'Pixelify Sans', 'Helvetica', sans-serif;
-    font-size: 16px;
 }
 
 /* CLASSES ÚTILIZARIAS */
