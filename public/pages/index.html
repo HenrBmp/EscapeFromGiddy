@@ -5,20 +5,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/styles/style.css" type="text/css" />
         <link rel="stylesheet" href="/styles/home.css" type="text/css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/styles/animations.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Sedgwick+Ave+Display&display=swap"
+            rel="stylesheet"
+        />
         <title>Home</title>
     </head>
     <body>
-        <div id="root">
-            <video id="home-background" src="">
-            </video>
+        <video id="homeBackground" height="100%" autoplay loop>
+            <source src="media/home-page-video.webm" type="video/webm">
+        </video>
 
-            <div id="home-overlays">
-                <h1>Escape From Giddy</h1>
-                <a href="/game" id="botaoIniciarJogo" class="botao-home-page">Play</a>
-                <a href="/rank" id="botaoVerRank" class="botao-home-page">Ranking</a>
+        <div id="homeOverlays">
+            <div id="homeTitulo" class="sedgwick">
+                <span>Escape</span>
+                <span>From</span>
+                <span>Giddy</span>
+            </div>
+
+            <div id="homeBotoes">
+                <a href="/game" id="botaoIniciarJogo" class="botao-home-page">
+                    Jogar
+                </a>
+                <a href="/rank" id="botaoVerRank" class="botao-home-page">
+                    Ranking
+                </a>
             </div>
         </div>
     </body>

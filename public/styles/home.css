@@ -1,0 +1,69 @@
+#homeOverlays {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4rem min(5rem, 10vw);
+}
+
+#homeBackground {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    aspect-ratio: 11/12;
+    max-height: 100dvh;
+    max-width: 100vw;
+    height: auto;
+    width: auto;
+    z-index: 1;
+    margin: 0 auto;
+    display: block;
+}
+
+#homeTitulo {
+    display: flex;
+    flex-direction: column;
+    font-size: 5rem;
+    line-height: 0.85em;
+    color: var(--rosa-fraco);
+    filter: drop-shadow(4px 4px 0px var(--preto));
+}
+
+#homeTitulo > *:nth-of-type(3) {
+    font-size: 8rem;
+    line-height: 0.8em;
+    color: var(--azul);
+}
+
+#homeBotoes {
+    display: grid;
+    gap: 24px;
+    width: calc(100% + 64px);
+}
+
+.botao-home-page {
+    text-decoration: none;
+    color: black;
+    font-size: 2.5rem;
+    border-radius: var(--radius);
+    padding: 0.5rem;
+    text-align: center;
+    border: 3px solid var(--preto);
+}
+
+#botaoIniciarJogo {
+    filter: drop-shadow(4px 4px 0px var(--azul))
+        drop-shadow(6px 6px 0px var(--amarelo));
+    background: var(--rosa-escuro);
+}
+
+#botaoVerRank {
+    filter: drop-shadow(4px 4px 0px var(--amarelo))
+        drop-shadow(6px 6px 0px var(--rosa-escuro));
+    background: var(--azul);
+}

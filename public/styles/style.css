@@ -6,8 +6,13 @@
     margin: 0;
 }
 
+body {
+    min-height: 100dvh;
+}
+
 /* VARIÁVEIS */
 :root {
+    overflow-x: hidden;
     font-family: 'Pixelify Sans', 'Helvetica', sans-serif;
     font-size: 14px;
     --preto: #1e1d1d;
