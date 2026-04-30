@@ -16,15 +16,22 @@
     </head>
     <body>
         <video id="homeBackground" height="100%" autoplay loop>
-            <source src="media/home-page-video.webm" type="video/webm">
+            <source src="media/home-page-video.webm" type="video/webm" />
         </video>
 
         <div id="homeOverlays">
-            <div id="homeTitulo" class="sedgwick">
-                <span>Escape</span>
-                <span>From</span>
-                <span>Giddy</span>
-            </div>
+            <header id="homeHead">
+                <div id="homeTitulo" class="sedgwick">
+                    <span>Escape</span>
+                    <span>From</span>
+                    <span>Giddy</span>
+                </div>
+
+                <div id="homeInfos">
+                    <p>Olá <span id="username">Jogador</span></p>
+                    <p>Recorde atual: <span id="recordeAtual">0</span></p>
+                </div>
+            </header>
 
             <div id="homeBotoes">
                 <a href="/game" id="botaoIniciarJogo" class="botao-home-page">

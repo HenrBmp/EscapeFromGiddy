@@ -1,5 +1,5 @@
 body {
-    background: no-repeat center url("/media/background_hollywood.png");
+    background: no-repeat center url('/media/background_hollywood.png');
 }
 
 #homeBackground {
@@ -23,17 +23,30 @@ body {
     left: 0;
     top: 0;
     height: 100dvh;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 4rem min(5rem, 10vw);
 }
 
+#homeHead {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4rem;
+    align-items: start;
+}
+
 #homeTitulo {
     display: flex;
     flex-direction: column;
+    justify-self: start;
     font-size: 5rem;
     line-height: 0.85em;
+    width: fit-content;
     color: var(--rosa-fraco);
     filter: drop-shadow(4px 4px 0px var(--preto));
 }
@@ -44,10 +57,24 @@ body {
     color: var(--azul);
 }
 
+#homeInfos {
+    font-size: 1.5rem;
+    text-align: right;
+}
+
+#homeInfos > *:nth-of-type(1) {
+    filter: drop-shadow(2px 2px 0 var(--rosa-fraco));
+}
+
+#homeInfos > *:nth-of-type(2) {
+    filter: drop-shadow(2px 2px 0 var(--azul));
+}
+
 #homeBotoes {
     display: grid;
     gap: 24px;
-    width: calc(100% + 64px);
+    width: fit-content;
+    justify-self: end;
 }
 
 .botao-home-page {
@@ -55,7 +82,7 @@ body {
     color: black;
     font-size: 2.5rem;
     border-radius: var(--radius);
-    padding: 0.5rem;
+    padding: 0.5rem 6rem;
     text-align: center;
     border: 3px solid var(--preto);
 }
