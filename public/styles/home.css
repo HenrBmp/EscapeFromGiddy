@@ -1,13 +1,5 @@
-#homeOverlays {
-    position: absolute;
-    z-index: 2;
-    left: 0;
-    top: 0;
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 4rem min(5rem, 10vw);
+body {
+    background: no-repeat center url("/media/background_hollywood.png");
 }
 
 #homeBackground {
@@ -23,6 +15,18 @@
     z-index: 1;
     margin: 0 auto;
     display: block;
+}
+
+#homeOverlays {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4rem min(5rem, 10vw);
 }
 
 #homeTitulo {
