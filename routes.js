@@ -1,6 +1,6 @@
-import express from "express";
-import { join } from "path";
-import RankControllers from "./src/controllers/rankControllers.js";
+import express from 'express';
+import { join } from 'path';
+import RankControllers from './src/controllers/rankControllers.js';
 
 const router = express.Router();
 
@@ -12,24 +12,24 @@ const router = express.Router();
 function getPage(fileName) {
     return join(
         import.meta.dirname,
-        "public",
-        "pages",
-        fileName.replace(".html", "") + ".html",
+        'public',
+        'pages',
+        fileName.replace('.html', '') + '.html',
     );
 }
 
 // =======================Pagina Inicial=======================
-router.get("/", (req, res) => {
-    res.sendFile(getPage("index"));
+router.get('/', (req, res) => {
+    res.sendFile(getPage('index'));
 });
 
 // =======================Ranking=======================
-router.get("/rank", RankControllers.getRanking);
-router.post("/rank", RankControllers.insertRecord);
+router.get('/rank', RankControllers.getRanking);
+router.post('/rank', RankControllers.insertRecord);
 
 // =======================Arquivos estaticos=======================
-router.use("/styles", express.static(join("public", "styles")));
-router.use("/scripts", express.static(join("public", "scripts")));
-router.use("/media", express.static(join("public", "media")));
+router.use('/styles', express.static(join('public', 'styles')));
+router.use('/scripts', express.static(join('public', 'scripts')));
+router.use('/media', express.static(join('public', 'media')));
 
 export default router;
