@@ -10,7 +10,6 @@ export default class RankControllers {
         const [result] = await mysql.query(
             `SELECT nome, maior_pontuacao FROM jogador ORDER BY maior_pontuacao DESC;`,
         );
-        const haJogadores = result.length > 0;
         res.setHeader('content-type', 'application/json; charset=utf-8').status(StatusCodes.OK).send(result);
     }
 
