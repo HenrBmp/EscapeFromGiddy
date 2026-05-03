@@ -1,4 +1,5 @@
 import mysql from '../../database.js';
+import { StatusCodes } from "http-status-codes";
 export default class RankControllers {
     /**
      * Envia os jogadores e seu recorde de pontuação em ordem decrescente.
@@ -10,7 +11,7 @@ export default class RankControllers {
             `SELECT nome, maior_pontuacao FROM jogador ORDER BY maior_pontuacao DESC;`,
         );
         const haJogadores = result.length > 0;
-        res.setHeader('content-type', 'application/json; charset=utf-8').status(200).send(result);
+        res.setHeader('content-type', 'application/json; charset=utf-8').status(StatusCodes.OK).send(result);
     }
 
     /**
