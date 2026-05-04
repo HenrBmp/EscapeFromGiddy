@@ -25,8 +25,8 @@ router.get('/', (req, res) => {
 
 // =======================Ranking=======================
 router.get('/rank', RankControllers.obterRanking);
+router.get('/rank/:nomeJogador', RankControllers.obterRecordeJogador);
 router.patch('/rank', RankControllers.atualizarRecorde);
-router.post('/recent-record', RankControllers.obterRecordeJogador);
 
 // =======================Arquivos estaticos=======================
 router.use('/styles', express.static(join('public', 'styles')));
