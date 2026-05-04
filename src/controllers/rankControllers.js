@@ -30,7 +30,7 @@ export default class RankControllers {
     }
 
     /**
-     *
+     * Atualiza o recorde de pontuação de um jogador no banco de dados.
      * @param {import("express").Request} req Requisição
      * @param {import("express").Response} res Resposta
      */
