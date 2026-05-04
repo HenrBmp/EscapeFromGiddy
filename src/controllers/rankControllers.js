@@ -34,8 +34,8 @@ export default class RankControllers {
     static async atualizarRecorde(req, res) {}
 
     /**
-     * Envia aio cliente o recorde do jogador cujo nome foi recebido pelo corpo da requisição.
-     * Criara o jogador no banco de dados caso o mesmo nao exista, consequentemente enviando 0 como recorde.
+     * Envia ao cliente o recorde do jogador cujo nome foi recebido pelo corpo da requisição.
+     * Criará o jogador no banco de dados caso o mesmo nao exista, consequentemente enviando 0 como recorde.
      * @param {import("express").Request} req Requisição
      * @param {import("express").Response} res Resposta
      */
