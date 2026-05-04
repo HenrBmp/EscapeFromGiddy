@@ -21,7 +21,10 @@ export default class RankControllers {
         } catch (error) {
             res.status(StatusHttp.ERRO_INTERNO_DO_SERVIDOR).json({
                 message: 'Houve um erro na consulta ao banco de dados.',
-                error,
+                error: {
+                    code: error.code,
+                    errno: error.errno,
+                },
             });
         }
     }
@@ -31,7 +34,25 @@ export default class RankControllers {
      * @param {import("express").Request} req Requisição
      * @param {import("express").Response} res Resposta
      */
-    static async atualizarRecorde(req, res) {}
+    static async atualizarRecorde(req, res) {
+        const { nomeJogador, novoRecorde } = req.body;
+        res.setHeaders(jsonHeader);
+        try {
+            const [result] = await mysql.query(
+                'UPDATE jogador SET maior_pontuacao = ? WHERE nome = ?',
+                [novoRecorde, nomeJogador],
+            );
+            res.status(StatusHttp.OK).json(result);
+        } catch (error) {
+            res.status(StatusHttp.ERRO_INTERNO_DO_SERVIDOR).json({
+                message: 'Houve um erro na consulta ao banco de dados.',
+                error: {
+                    code: error.code,
+                    errno: error.errno,
+                },
+            });
+        }
+    }
 
     /**
      * Envia ao cliente o recorde do jogador cujo nome foi recebido pelo corpo da requisição.
@@ -40,21 +61,27 @@ export default class RankControllers {
      * @param {import("express").Response} res Resposta
      */
     static async obterRecordeJogador(req, res) {
-        const { nomeJogador } = req.body;
+        const { nomeJogador } = req.params;
         try {
-            const [result] = await mysql.execute(
-                'INSERT IGNORE INTO jogador VALUES (?, null);' +
-                'SELECT maior_pontuacao FROM jogador WHERE nome = ?;',
-                [nomeJogador, nomeJogador],
+            await mysql.query('INSERT IGNORE INTO jogador VALUES (?, null)', [nomeJogador]);
+            const [result] = await mysql.query(
+                'SELECT maior_pontuacao FROM jogador WHERE nome = ?',
+                [nomeJogador],
             );
             res.setHeader('content-type', 'plain/text; charset=utf8')
                 .status(StatusHttp.OK)
                 .send(result[0].maior_pontuacao.toString());
         } catch (error) {
-            res.setHeader(jsonHeader).status(StatusHttp.ERRO_INTERNO_DO_SERVIDOR).json({
-                message: 'Houve um erro na consulta ao banco de dados.',
-                error,
-            });
+            console.error(error);
+            res.setHeaders(jsonHeader)
+                .status(StatusHttp.ERRO_INTERNO_DO_SERVIDOR)
+                .json({
+                    message: 'Houve um erro na consulta ao banco de dados.',
+                    error: {
+                        code: error.code,
+                        errno: error.errno,
+                    },
+                });
         }
     }
 }
