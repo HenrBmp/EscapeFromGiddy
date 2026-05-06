@@ -14,9 +14,12 @@ export default class ValidacaoDados {
             const header = new Headers({
                 'Content-Type': 'application/json; charset=utf-8',
             });
-            res.setHeaders(header).status(StatusHttp.REQUISICAO_INVALIDA).json({
-                message: 'Valor do recorde deve ser um inteiro.',
-            });
+            res.setHeaders(header)
+                .status(StatusHttp.REQUISICAO_INVALIDA)
+                .json({
+                    message: 'Valor do recorde deve ser um inteiro.',
+                    error: { code: 'RECORDE_NAO_INT' },
+                });
         }
     }
 
@@ -34,12 +37,12 @@ export default class ValidacaoDados {
         if (!req.body) {
             res.json({
                 message: 'Corpo da requisicao ausente.',
-                code: 'INVALID_BODY',
+                error: { code: 'CORPO_INVALIDO' },
             });
         } else if (!req.body.nomeJogador || 2 < req.body.nomeJogador.length < 30) {
             req.json({
                 message: 'Nome de jogador inválido.',
-                code: 'INVALID_NAME',
+                error: { code: 'NOME_INVALIDO' },
             });
         }
     }
