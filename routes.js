@@ -1,7 +1,7 @@
 import express from 'express';
 import { join } from 'path';
 import RankControllers from './src/controllers/rankControllers.js';
-import ValidacaoDados from './src/middlewares/validacaoDados.js';
+import ValidacaoCorpoRequisicao from './src/middlewares/validacaoCorpoRequisicao.js';
 
 const router = express.Router();
 
@@ -11,12 +11,7 @@ const router = express.Router();
  * @returns Caminho absoluto para o arquivo.
  */
 function getPage(fileName) {
-    return join(
-        import.meta.dirname,
-        'public',
-        'pages',
-        fileName.replace('.html', '') + '.html',
-    );
+    return join(import.meta.dirname, 'public', 'pages', fileName.replace('.html', '') + '.html');
 }
 
 // =======================Pagina Inicial=======================
@@ -25,9 +20,14 @@ router.get('/', (req, res) => {
 });
 
 // =======================Ranking=======================
-router.get('/rank', ValidacaoDados.verificarCorpo_e_Nome, RankControllers.obterRanking);
+router.get('/rank', ValidacaoCorpoRequisicao.verificarCorpo_e_Nome, RankControllers.obterRanking);
 router.get('/rank/:nomeJogador', RankControllers.obterRecordeJogador);
-router.patch('/rank', ValidacaoDados.verificarCorpo_e_Nome, ValidacaoDados.validarRecorde, RankControllers.atualizarRecorde);
+router.patch(
+    '/rank',
+    ValidacaoCorpoRequisicao.verificarCorpo_e_Nome,
+    ValidacaoCorpoRequisicao.validarRecorde,
+    RankControllers.atualizarRecorde,
+);
 
 // =======================Arquivos estaticos=======================
 router.use('/styles', express.static(join('public', 'styles')));

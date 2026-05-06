@@ -1,6 +1,6 @@
 import StatusHttp from '../libs/HttpStatus.js';
 
-export default class ValidacaoDados {
+export default class ValidacaoCorpoRequisicao {
     /**
      *
      * @param {import('express').Request} req Requisição
