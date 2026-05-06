@@ -1,6 +1,7 @@
 import express from 'express';
 import { join } from 'path';
 import RankControllers from './src/controllers/rankControllers.js';
+import ValidacaoDados from './src/middlewares/validacaoDados.js';
 
 const router = express.Router();
 
@@ -24,9 +25,9 @@ router.get('/', (req, res) => {
 });
 
 // =======================Ranking=======================
-router.get('/rank', RankControllers.obterRanking);
+router.get('/rank', ValidacaoDados.verificarCorpo_e_Nome, RankControllers.obterRanking);
 router.get('/rank/:nomeJogador', RankControllers.obterRecordeJogador);
-router.patch('/rank', RankControllers.atualizarRecorde);
+router.patch('/rank', ValidacaoDados.verificarCorpo_e_Nome, ValidacaoDados.validarRecorde, RankControllers.atualizarRecorde);
 
 // =======================Arquivos estaticos=======================
 router.use('/styles', express.static(join('public', 'styles')));
