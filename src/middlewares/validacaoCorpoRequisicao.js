@@ -40,7 +40,7 @@ export default class ValidacaoCorpoRequisicao {
                 error: { code: 'CORPO_INVALIDO' },
             });
         } else if (!req.body.nomeJogador || 2 < req.body.nomeJogador.length < 30) {
-            req.json({
+            res.json({
                 message: 'Nome de jogador inválido.',
                 error: { code: 'NOME_INVALIDO' },
             });
