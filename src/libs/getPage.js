@@ -6,5 +6,12 @@ import { join } from 'node:path';
  * @returns Caminho absoluto para o arquivo.
  */
 export default function getPage(fileName) {
-    return join(import.meta.dirname, 'public', 'pages', fileName.replace('.html', '') + '.html');
+    return join(
+        import.meta.dirname,
+        '..',
+        '..',
+        'public',
+        'pages',
+        fileName.replace('.html', '') + '.html',
+    );
 }
