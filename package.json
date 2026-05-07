@@ -7,7 +7,8 @@
     "type": "module",
     "main": "server.js",
     "scripts": {
-        "dev": "nodemon server.js"
+        "dev": "nodemon server.js",
+        "test": "vitest"
     },
     "nodemonConfig": {
         "watch": [
@@ -29,7 +30,9 @@
         "eslint-config-prettier": "^10.1.8",
         "globals": "^17.6.0",
         "nodemon": "^3.1.14",
-        "prettier": "^3.8.3"
+        "prettier": "^3.8.3",
+        "supertest": "^7.2.2",
+        "vitest": "^4.1.5"
     },
     "dependencies": {
         "express": "^5.2.1",
