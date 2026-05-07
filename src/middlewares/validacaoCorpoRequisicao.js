@@ -39,11 +39,16 @@ export default class ValidacaoCorpoRequisicao {
                 message: 'Corpo da requisicao ausente.',
                 error: { code: 'CORPO_INVALIDO' },
             });
-        } else if (!req.body.nomeJogador || 2 < req.body.nomeJogador.length < 30) {
+        } else if (
+            !req.body.nomeJogador ||
+            req.body.nomeJogador.length < 3 ||
+            req.body.nomeJogador.length > 30
+        ) {
             res.json({
                 message: 'Nome de jogador inválido.',
                 error: { code: 'NOME_INVALIDO' },
             });
         }
+        next();
     }
 }
