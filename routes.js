@@ -7,10 +7,12 @@ import getPage from './src/libs/getPage.js';
 const router = express.Router();
 
 // =======================Pagina Inicial=======================
-router.get('/', (req, res) => res.sendFile(getPage('index')));
+router.get('/', (req, res) =>
+    res.setHeader('content-type', 'text/html; charset=utf-8').status(200).sendFile(getPage('index')),
+);
 
 // =======================Ranking=======================
-router.get('/rank', ValidacaoCorpoRequisicao.verificarCorpo_e_Nome, RankControllers.obterRanking);
+router.get('/rank', RankControllers.obterRanking);
 router.get('/rank/:nomeJogador', RankControllers.obterRecordeJogador);
 router.patch(
     '/rank',
