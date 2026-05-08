@@ -26,15 +26,15 @@ describe('API Endpoints', () => {
     });
 
     describe('GET /', () => {
-        it('should serve the index.html file', async () => {
+        it('entrega o index.html', async () => {
             const response = await request(app).get('/');
             expect(response.status).toBe(200);
-            expect(response.headers['content-type']).toMatch(/text\/html/);
+            expect(response.headers['content-type']).toContain('text/html');
         });
     });
 
     describe('GET /rank', () => {
-        it('should return the ranking list', async () => {
+        it('retorna o ranking completo', async () => {
             const mockData = [{ nome: 'Player1', maior_pontuacao: 100 }];
             mockQuery.mockResolvedValueOnce([mockData]);
 
@@ -44,7 +44,7 @@ describe('API Endpoints', () => {
             expect(response.body).toEqual(mockData);
         });
 
-        it('should return 500 if the database query fails', async () => {
+        it('retorna um erro com status 500 quando o banco de dados falhar', async () => {
             mockQuery.mockRejectedValueOnce(new Error('DB Error'));
 
             const response = await request(app).get('/rank');
@@ -55,7 +55,7 @@ describe('API Endpoints', () => {
     });
 
     describe('GET /rank/:nomeJogador', () => {
-        it('should return player record', async () => {
+        it('retorna o recorde de um jogador', async () => {
             const mockData = [{ maior_pontuacao: 50 }];
             mockQuery.mockResolvedValueOnce([]).mockResolvedValueOnce([mockData]);
 
@@ -66,7 +66,7 @@ describe('API Endpoints', () => {
             expect(response.headers['content-type']).toMatch(/plain\/text/);
         });
 
-        it('should return 500 when the database throws', async () => {
+        it('retorna um erro com status 500 quando o banco de dados falhar', async () => {
             mockQuery.mockRejectedValueOnce(new Error('DB Error'));
 
             const response = await request(app).get('/rank/Player1');
@@ -77,7 +77,7 @@ describe('API Endpoints', () => {
     });
 
     describe('PATCH /rank', () => {
-        it('should update record successfully', async () => {
+        it('atualiza recordes com sucesso', async () => {
             const mockResult = { affectedRows: 1 };
             mockQuery.mockResolvedValueOnce([mockResult]);
 
@@ -89,7 +89,7 @@ describe('API Endpoints', () => {
             expect(response.body).toEqual(mockResult);
         });
 
-        it('should return 400 for invalid record type', async () => {
+        it('retorna RECORDE_NAO_INT para novoRecorde com tipo diferente de inteiro', async () => {
             const response = await request(app)
                 .patch('/rank')
                 .send({ nomeJogador: 'Player1', novoRecorde: 'notanumber' });
@@ -97,11 +97,27 @@ describe('API Endpoints', () => {
             expect(response.status).toBe(400);
             expect(response.body.error.code).toBe('RECORDE_NAO_INT');
         });
+
+        it('retorna CORPO_INVALIDO para requisições com corpo ausente', async () => {
+            const response = await request(app).patch('/rank');
+
+            expect(response.status).toBe(400);
+            expect(response.body.error.code).toBe('CORPO_INVALIDO');
+        });
+
+        it('retorna NOME_INVALIDO para requisições com nomeJogador ausente', async () => {
+            const response = await request(app).patch('/rank').send({
+                novoRecorde: '100',
+            });
+
+            expect(response.status).toBe(400);
+            expect(response.body.error.code).toBe('NOME_INVALIDO');
+        });
     });
 
-    describe('Static routes', () => {
-        it('should serve static CSS files from /styles', async () => {
-            const response = await request(app).get('/styles/home.css');
+    describe('Rotas estáticas', () => {
+        it('pode-se obter arquivos estaticos por meio de /styles', async () => {
+            const response = await request(app).get('/styles/style.css');
             expect(response.status).toBe(200);
         });
     });
