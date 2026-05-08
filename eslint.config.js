@@ -3,6 +3,7 @@ import js from '@eslint/js';
 import json from '@eslint/json';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default defineConfig([
     {
@@ -22,11 +23,7 @@ export default defineConfig([
         files: ['**/*.js'],
         languageOptions: {
             ecmaVersion: 'latest',
-            sourceType: 'module',
-            globals: {
-                ...globals.node,
-                ...globals.es2021,
-            },
+            sourceType: 'module'
         },
         rules: {
             indent: ['error', 4],
@@ -40,10 +37,7 @@ export default defineConfig([
             curly: ['error', 'all'],
             'no-multi-spaces': 'error',
             'arrow-spacing': ['error', { before: true, after: true }],
-            'import/no-unresolved': 'error',
-            'import/named': 'error',
-            'import/default': 'error',
         },
     },
-    { extends: ['prettier'] },
+    eslintConfigPrettier,
 ]);
