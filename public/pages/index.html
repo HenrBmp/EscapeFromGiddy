@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/styles/style.css" type="text/css" />
         <link rel="stylesheet" href="/styles/home.css" type="text/css" />
-        <link rel="stylesheet" href="/styles/animations.css" />
+        <link rel="stylesheet" href="/styles/popUp.css" type="text/css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -34,13 +34,22 @@
             </header>
 
             <div id="homeBotoes">
-                <a href="/game" id="botaoIniciarJogo" class="botao-home-page">
-                    Jogar
-                </a>
-                <a href="/rank" id="botaoVerRank" class="botao-home-page">
-                    Ranking
-                </a>
+                <a href="/game" id="botaoIniciarJogo" class="botao-home-page"> Jogar </a>
+                <a href="/rankpage" id="botaoVerRank" class="botao-home-page"> Ranking </a>
             </div>
         </div>
+
+        <template id="popUpTemplate">
+            <div id="blurBackgroundContainer">
+                <form id="popUp">
+                    <h1>Insira um nome</h1>
+                    <input type="text" name="nomeJogador" id="inputNomeJogador" class="pixelify" />
+                    <small>Ele deve possuir no mínimo 3 caracteres e no máximo 30.</small>
+                    <button type="submit" class="pixelify">Pronto</button>
+                </form>
+            </div>
+        </template>
+
+        <script src="/scripts/homepage.js" type="module"></script>
     </body>
 </html>
