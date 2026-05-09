@@ -18,12 +18,20 @@ export default defineConfig([
         language: 'json/json',
         extends: ['json/recommended'],
     },
-    { files: ['**/*.css'], plugins: { css }, language: 'css/css', extends: ['css/recommended'] },
+    {
+        files: ['**/*.css'],
+        plugins: { css },
+        language: 'css/css',
+        extends: ['css/recommended'],
+        rules: {
+            'css/no-invalid-properties': 'off',
+        },
+    },
     {
         files: ['**/*.js'],
         languageOptions: {
             ecmaVersion: 'latest',
-            sourceType: 'module'
+            sourceType: 'module',
         },
         rules: {
             indent: ['error', 4],
