@@ -12,9 +12,9 @@ body {
 
 /* VARIÁVEIS */
 :root {
-    overflow-x: hidden;
     font-family: 'Pixelify Sans', 'Helvetica', sans-serif;
     font-size: 14px;
+    overflow-x: hidden;
     --preto: #1e1d1d;
     --branco: #ededed;
     --rosa-escuro: #e75480;
@@ -28,4 +28,8 @@ body {
 /* CLASSES ÚTILIZARIAS */
 .sedgwick {
     font-family: 'Sedgwick Ave Display', sans-serif;
+}
+
+.pixelify {
+    font-family: 'Pixelify Sans', sans-serif;
 }
