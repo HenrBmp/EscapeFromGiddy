@@ -4,5 +4,9 @@ export default async function atualizarRecordeCliente(nomeJogador) {
 
     localStorage.setItem('recordeAtual', await recordeAtualizado);
 
-    return await recordeAtualizado;
+    if (await recordeAtualizado.hasOwnPropertie('error')) {
+        return localStorage.getItem('recordeAtual') ?? 0;
+    } else {
+        return await recordeAtualizado;
+    }
 }
