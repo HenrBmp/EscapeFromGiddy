@@ -11,6 +11,11 @@ router.get('/', (req, res) =>
     res.setHeader('content-type', 'text/html; charset=utf-8').status(200).sendFile(getPage('index')),
 );
 
+// =======================Pagina do Ranking=======================
+router.get('/ranking', (req, res) =>
+    res.setHeader('content-type', 'text/html; charset=utf-8').status(200).sendFile(getPage('rank')),
+);
+
 // =======================Ranking=======================
 router.get('/rank', RankControllers.obterRanking);
 router.get('/rank/:nomeJogador', RankControllers.obterRecordeJogador);
