@@ -8,7 +8,7 @@ export default class ValidacaoCorpoRequisicao {
      * @param {import('express').next} next Proximo middleware
      */
     static validarRecorde(req, res, next) {
-        const { nomeJogador, novoRecorde } = req.body;
+        const novoRecorde = req.body.novoRecorde;
         if (Number.isInteger(novoRecorde)) next();
         else {
             const header = new Headers({
