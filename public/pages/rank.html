@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/styles/style.css" type="text/css" />
+        <link rel="stylesheet" href="/styles/rank.css" type="text/css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Sedgwick+Ave+Display&display=swap"
+            rel="stylesheet"
+        />
+        <title>Ranking</title>
+    </head>
+    <body>
+        <div id="rankContainer">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Nome</td>
+                        <td>Pontuação</td>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        <a href="/" id="homeButton">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+            >
+                <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+            </svg>
+        </a>
+        <script src="/scripts/rankpage.js" type="module"></script>
+    </body>
+</html>

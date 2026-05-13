@@ -1,0 +1,48 @@
+body {
+    background: no-repeat center url('/media/background_hollywood.png');
+    font-size: 24px;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+#rankContainer {
+    display: grid;
+    place-items: center;
+    width: 100vw;
+    height: 100dvh;
+}
+
+table {
+    background: var(--preto);
+    border-radius: 1.5rem;
+    padding: 1rem;
+    min-width: 50vw;
+    filter: drop-shadow(4px 4px 0px var(--azul)) drop-shadow(6px 6px 0px var(--amarelo));
+}
+
+td {
+    background: var(--branco);
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.5rem;
+}
+
+#homeButton {
+    position: absolute;
+    inset: min(5vw, 2rem);
+    display: block;
+    width: fit-content;
+    height: fit-content;
+}
+
+#homeButton svg {
+    fill: #ededed;
+    filter: drop-shadow(2px 2px 0px var(--azul)) drop-shadow(2px 2px 0px var(--rosa-fraco));
+}
+
+thead td {
+    background: linear-gradient(to right, var(--amarelo), var(--rosa-fraco), var(--azul));
+}
