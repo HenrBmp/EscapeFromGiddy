@@ -7,7 +7,7 @@
     "type": "module",
     "main": "server.js",
     "scripts": {
-        "dev": "nodemon server.js",
+        "dev": "nodemon --env-file=.env server.js",
         "test": "vitest"
     },
     "nodemonConfig": {
