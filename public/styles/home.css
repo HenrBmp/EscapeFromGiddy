@@ -1,5 +1,5 @@
 body {
-    background: no-repeat center url('/media/background_hollywood.png');
+    background: no-repeat center/100% url('/media/background_hollywood.png');
 }
 
 #homeBackground {
