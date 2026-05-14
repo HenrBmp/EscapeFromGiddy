@@ -21,7 +21,7 @@ table {
     border-radius: 1.5rem;
     padding: 1rem;
     min-width: 50vw;
-    filter: drop-shadow(4px 4px 0px var(--azul)) drop-shadow(6px 6px 0px var(--amarelo));
+    filter: drop-shadow(0 0 4px #000) drop-shadow(4px 4px 0px var(--azul)) drop-shadow(6px 6px 0px var(--amarelo));
 }
 
 td {
