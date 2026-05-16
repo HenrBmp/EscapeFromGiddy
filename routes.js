@@ -2,19 +2,18 @@ import express from 'express';
 import { join } from 'path';
 import RankControllers from './src/controllers/rankControllers.js';
 import ValidacaoCorpoRequisicao from './src/middlewares/validacaoCorpoRequisicao.js';
-import getPage from './src/libs/getPage.js';
+import StaticPagesControllers from './src/controllers/staticPagesControllers.js';
 
 const router = express.Router();
 
 // =======================Pagina Inicial=======================
-router.get('/', (req, res) =>
-    res.setHeader('content-type', 'text/html; charset=utf-8').status(200).sendFile(getPage('index')),
-);
+router.get('/', StaticPagesControllers.homePage);
 
 // =======================Pagina do Ranking=======================
-router.get('/ranking', (req, res) =>
-    res.setHeader('content-type', 'text/html; charset=utf-8').status(200).sendFile(getPage('rank')),
-);
+router.get('/ranking', StaticPagesControllers.rankPage);
+
+// =======================Jogo=======================
+router.get('/game', StaticPagesControllers.gamePage);
 
 // =======================Ranking=======================
 router.get('/rank', RankControllers.obterRanking);
