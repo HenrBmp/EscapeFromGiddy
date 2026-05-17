@@ -1,19 +1,19 @@
 import getPage from '../libs/getPage.js';
 
-export default class StaticPagesControllers {
-    static htmlHeader = new Headers({
-        'content-type': 'text/html; charset=utf-8',
-    });
+const htmlHeader = new Headers({
+    'content-type': 'text/html; charset=utf-8',
+});
 
+export default class StaticPagesControllers {
     static homePage(req, res) {
-        res.setHeaders(this.htmlHeader).status(200).sendFile(getPage('index'));
+        res.setHeaders(htmlHeader).status(200).sendFile(getPage('index'));
     }
 
     static rankPage(req, res) {
-        res.setHeaders(this.htmlHeader).status(200).sendFile(getPage('rank'));
+        res.setHeaders(htmlHeader).status(200).sendFile(getPage('rank'));
     }
 
     static gamePage(req, res) {
-        res.setHeaders(this.htmlHeader).status(200).sendFile(getPage('game'));
+        res.setHeaders(htmlHeader).status(200).sendFile(getPage('game'));
     }
 }
