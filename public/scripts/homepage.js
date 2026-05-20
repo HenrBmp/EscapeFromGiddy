@@ -4,15 +4,11 @@ import mostrarInformacoesNaHome from '/scripts/mostrarInformacoesNaHome.js';
 import nomeJogadorEhValido from '/scripts/validarNomejogador.js';
 
 (async () => {
-    const nomeJogador_localstorage = localStorage.getItem('nomeJogador');
+    let nomeJogador;
+    const nomeLocal = localStorage.getItem('nomeJogador');
+    if (nomeLocal && nomeJogadorEhValido(nomeLocal)) nomeJogador = nomeLocal;
+    else nomeJogador = await popUpNomeJogador();
 
-    async function atualizarInformacoesNoCliente(nomeJogador_popup) {
-        const pontuacao = await atualizarRecordeCliente(nomeJogador_popup);
-        mostrarInformacoesNaHome(nomeJogador_popup, pontuacao);
-    }
-
-    if (nomeJogador_localstorage && nomeJogadorEhValido(nomeJogador_localstorage)) {
-        atualizarInformacoesNoCliente(nomeJogador_localstorage);
-    }
-    else popUpNomeJogador(atualizarInformacoesNoCliente);
+    const pontuacao = await atualizarRecordeCliente(nomeJogador);
+    mostrarInformacoesNaHome(nomeJogador, pontuacao);
 })();
