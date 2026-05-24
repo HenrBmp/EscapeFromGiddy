@@ -1,7 +1,7 @@
-import atualizarRecordeCliente from '/scripts/atualizarRecordeCliente.js';
-import popUpNomeJogador from '/scripts/popUpNomeJogador.js';
-import mostrarInformacoesNaHome from '/scripts/mostrarInformacoesNaHome.js';
-import nomeJogadorEhValido from '/scripts/validarNomejogador.js';
+import atualizarRecordeCliente from '/scripts/home/atualizarRecordeCliente.js';
+import popUpNomeJogador from '/scripts/home/popUpNomeJogador.js';
+import mostrarInformacoesNaHome from '/scripts/home/mostrarInformacoesNaHome.js';
+import nomeJogadorEhValido from '/scripts/home/validarNomejogador.js';
 
 (async () => {
     let nomeJogador;

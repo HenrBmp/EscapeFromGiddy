@@ -1,4 +1,4 @@
-import nomeJogadorEhValido from '/scripts/validarNomejogador.js';
+import nomeJogadorEhValido from '/scripts/home/validarNomejogador.js';
 export default function popUpNomeJogador() {
     return new Promise((resolve) => {
         const template = document.querySelector('#popUpTemplate');
