@@ -6,7 +6,7 @@ const htmlHeader = new Headers({
 
 export default class StaticPagesControllers {
     static homePage(req, res) {
-        res.setHeaders(htmlHeader).status(200).sendFile(getPage('index'));
+        res.setHeaders(htmlHeader).status(200).sendFile(getPage('home'));
     }
 
     static rankPage(req, res) {
