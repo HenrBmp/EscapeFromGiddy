@@ -1,0 +1,47 @@
+/* Animação Start */
+@keyframes contagem {
+    0% {
+        content: '1';
+    }
+
+    28.57% {
+        content: '2';
+    }
+
+    57.12% {
+        content: '3';
+    }
+
+    85.71% {
+        content: 'start';
+        opacity: 1;
+        scale: 1;
+    }
+
+    100% {
+        opacity: 0;
+        scale: 0.7;
+    }
+}
+
+#root {
+    height: 100dvh;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+}
+
+#contagem {
+    width: 100vw;
+    height: 100dvh;
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+}
+
+#contagem::after {
+    animation: contagem 4s cubic-bezier(1, -0.01, 1, 0.12);
+    content: '';
+    font-size: 6rem;
+}
