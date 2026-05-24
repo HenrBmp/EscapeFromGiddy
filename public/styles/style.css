@@ -12,8 +12,8 @@ body {
 
 /* VARIÁVEIS */
 :root {
-    font-family: 'Pixelify Sans', 'Helvetica', sans-serif;
-    font-size: 14px;
+    font-family: 'Jersey 10', 'Helvetica', sans-serif;
+    font-size: 16px;
     overflow-x: hidden;
     --preto: #1e1d1d;
     --branco: #ededed;
@@ -30,6 +30,6 @@ body {
     font-family: 'Sedgwick Ave Display', sans-serif;
 }
 
-.pixelify {
-    font-family: 'Pixelify Sans', sans-serif;
+.jersey {
+    font-family: 'Jersey 10', sans-serif;
 }
