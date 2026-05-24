@@ -9,7 +9,7 @@ setTimeout(() => {
 }, 4000);
 
 function iniciarJogo() {
-    const TEMPO_LIMITE_JOGO = 1 * 60 * 1000;
+    const TEMPO_LIMITE_JOGO = 1.5 * 60 * 1000;
     const TEMPO_RAGE = TEMPO_LIMITE_JOGO * 0.7;
     const RAGE_BUFF_PERCENT = 30;
 
