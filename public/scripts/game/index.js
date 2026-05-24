@@ -50,7 +50,7 @@ function iniciarJogo() {
     // Rage Timer
     setTimeout(() => {
         giddy.setSprite(document.querySelector('img#giddyRage'));
-        giddy.setSpeed(Number.parseInt(giddy.velocity * (RAGE_BUFF_PERCENT/100)));
+        giddy.setSpeed(Number.parseInt(giddy.velocity * (1 + RAGE_BUFF_PERCENT/100)));
     }, TEMPO_RAGE);
 
     let timestampInicial;
