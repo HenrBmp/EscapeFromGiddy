@@ -29,6 +29,16 @@
     display: grid;
     place-items: center;
     font-size: 18px;
+    background: linear-gradient(45deg, var(--amarelo), var(--rosa-fraco), var(--azul));
+}
+
+#root #game {
+    width: 95vw;
+    height: 95vh;
+    background: repeat center/64px url('/media/canvasBackground.png');
+    border-radius: 12px;
+    border: 3px solid black;
+    filter: drop-shadow(0 0 6px var(--preto));
 }
 
 #contagem {

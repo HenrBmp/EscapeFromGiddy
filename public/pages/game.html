@@ -16,21 +16,23 @@
     </head>
     <body>
         <div id="root">
-            <canvas>
-                <img id="gustin" src="/media/gustin-piper.png" hidden />
-                <img id="giddyNormal" src="/media/giddy-normal.png" hidden />
-                <img id="giddyRage" src="/media/giddy-rage.png" hidden />
-            </canvas>
+            <div id="game">
+                <canvas>
+                    <img id="gustin" src="/media/gustin-piper.png" hidden />
+                    <img id="giddyNormal" src="/media/giddy-normal.png" hidden />
+                    <img id="giddyRage" src="/media/giddy-rage.png" hidden />
+                </canvas>
+            </div>
         </div>
         <div id="contagem"></div>
         <template id="popUpTemplate">
             <div id="blurBackgroundContainer">
-                <form id="popUp">
+                <div id="popUp">
                     <h1 id="titulo"></h1>
                     <h2 id="mensagemPontuacao"></h2>
                     <a href="/game" id="rejogarButton" type="submit"> Jogar novamente </a>
                     <a href="/" id="sairButton" type="submit">Sair</a>
-                </form>
+                </div>
             </div>
         </template>
         <script src="scripts/game/index.js" type="module"></script>
