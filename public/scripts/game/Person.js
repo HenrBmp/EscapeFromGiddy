@@ -34,7 +34,7 @@ export default class Person {
         this.setSpeed(velocity);
 
         const proporcaoSprite = sprite.width / sprite.height;
-        const newHeight = MENOR_LARGURA / 7;
+        const newHeight = MENOR_LARGURA / 6;
         const newWidth = proporcaoSprite * newHeight;
 
         this.#width = newWidth;
