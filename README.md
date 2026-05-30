@@ -142,13 +142,10 @@ O servidor será iniciado em `http://localhost:8080`.
 
 - Sistema de power-ups e itens coletáveis no canvas
 - Obstáculos e barreiras no cenário para enriquecer a movimentação
-- Múltiplas fases com dificuldade progressiva e diferentes inimigos
 - Efeitos sonoros e trilha sonora (Web Audio API)
 - Suporte a controles táteis em dispositivos móveis (touch events)
 - Diferentes personagens selecionáveis pelo jogador
-- Sistema de conquistas (_achievements_)
 - Internacionalização (i18n) para outros idiomas
-- Empacotamento e otimização com Vite para produção
 
 ---
 
