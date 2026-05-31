@@ -79,7 +79,7 @@ Disponível em: [escapefromgiddy.alwaysdata.net](https://escapefromgiddy.alwaysd
 
 ## Como Executar Localmente
 
-Pré-requisitos: Node.js 18+ e MySQL 8+
+Pré-requisitos: [Node.js 18+](https://nodejs.org/pt-br/download) e [MySQL 8+](https://dev.mysql.com/downloads/)
 
 ```bash
 git clone <url>
@@ -87,15 +87,27 @@ cd escape_from_diddy
 cp .env.example .env
 ```
 
+Configure o banco de dados MySQL rodando localmente:
+
+```bash
+CREATE DATABASE escape_from_giddy;
+USE escape_from_giddy;
+CREATE TABLE `jogador` (
+  `nome` varchar(20) NOT NULL,
+  `maior_pontuacao` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`nome`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
+
 Configure as variáveis de ambiente no arquivo `.env`:
 
 ```env
 PORT=8080
 IP=localhost
-NODE_ENV=development
+NODE_ENV=production
 MYSQL_USER=usuario
 MYSQL_PASSW=senha
-DATABASE=escape_from_diddy
+DATABASE=escape_from_giddy
 MYSQL_HOST=localhost
 ```
 
