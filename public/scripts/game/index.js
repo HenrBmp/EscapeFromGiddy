@@ -2,11 +2,18 @@ import fimJogoPopUp from './fimJogoPopUp.js';
 import Person from './Person.js';
 import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from './ConstantesViewport.js';
 
-setTimeout(() => {
+(function() {
     const contagemContainer = document.querySelector('#contagem');
-    contagemContainer.remove();
-    iniciarJogo();
-}, 4000);
+    const sobreposicaoCarregamento = document.querySelector("#sobreposicaoCarregamento");
+    window.addEventListener('load', () => {
+        sobreposicaoCarregamento.remove();
+        contagemContainer.classList.add("animacao-contagem-regressiva");
+        setTimeout(() => {
+            contagemContainer.remove();
+            iniciarJogo();
+        }, 4000);
+    })
+})();
 
 function iniciarJogo() {
     const TEMPO_LIMITE_JOGO = 1.5 * 60 * 1000;
@@ -15,12 +22,12 @@ function iniciarJogo() {
 
     const teclasPressionadas = {};
     window.addEventListener('keydown', (e) => {
-        const teclaToLower = e.key.toLowerCase();
-        if (['w', 'a', 's', 'd'].includes(teclaToLower)) teclasPressionadas[teclaToLower] = true;
+        const keydownTeclaToLower = e.key.toLowerCase();
+        if (['w', 'a', 's', 'd'].includes(keydownTeclaToLower)) teclasPressionadas[keydownTeclaToLower] = true;
     });
     window.addEventListener('keyup', (e) => {
-        const teclaToLower = e.key.toLowerCase();
-        if (['w', 'a', 's', 'd'].includes(teclaToLower)) teclasPressionadas[teclaToLower] = false;
+        const keyupTeclaToLower = e.key.toLowerCase();
+        if (['w', 'a', 's', 'd'].includes(keyupTeclaToLower)) teclasPressionadas[keyupTeclaToLower] = false;
     });
 
     const CTX = (() => {

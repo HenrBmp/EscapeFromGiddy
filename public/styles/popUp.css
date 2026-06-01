@@ -1,4 +1,4 @@
-#blurBackgroundContainer {
+#popUpContainer {
     position: absolute;
     inset: 0;
     height: 100dvh;
@@ -15,7 +15,6 @@
     filter: drop-shadow(0 0 6px #000);
     border-radius: var(--radius);
     border: black solid 1px;
-    font-size: 16px;
     
     z-index: 3;
     position: relative;
@@ -35,13 +34,13 @@
     background: var(--azul);
     border: black solid 2px;
     border-radius: 16px;
-    font-size: 18px;
+    font-size: 1.2rem;
 }
 
 #popUp input[type=text] {
     font: inherit;
     padding: .2rem .5rem;
-    font-size: 18px;
+    font-size: 1.2rem;
     border-radius: 12px;
     outline: none;
     border: black solid 1px;
