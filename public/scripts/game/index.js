@@ -2,17 +2,27 @@ import fimJogoPopUp from './fimJogoPopUp.js';
 import Person from './Person.js';
 import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from './ConstantesViewport.js';
 
-(function() {
+(function () {
     const contagemContainer = document.querySelector('#contagem');
-    const sobreposicaoCarregamento = document.querySelector("#sobreposicaoCarregamento");
+    const sobreposicaoCarregamento = document.querySelector('#sobreposicaoCarregamento');
+
     window.addEventListener('load', () => {
         sobreposicaoCarregamento.remove();
-        contagemContainer.classList.add("animacao-contagem-regressiva");
+        contagemContainer.classList.add('animacao-contagem-regressiva');
+
+        contagemContainer.addEventListener('animationstart', () => {
+            contagemContainer.removeEventListener('animationstart');
+            window.removeEventListener('load');
+            iniciarContagemRegressiva();
+        });
+    });
+
+    function iniciarContagemRegressiva() {
         setTimeout(() => {
             contagemContainer.remove();
             iniciarJogo();
         }, 4000);
-    })
+    }
 })();
 
 function iniciarJogo() {
@@ -23,11 +33,13 @@ function iniciarJogo() {
     const teclasPressionadas = {};
     window.addEventListener('keydown', (e) => {
         const keydownTeclaToLower = e.key.toLowerCase();
-        if (['w', 'a', 's', 'd'].includes(keydownTeclaToLower)) teclasPressionadas[keydownTeclaToLower] = true;
+        if (['w', 'a', 's', 'd'].includes(keydownTeclaToLower))
+            teclasPressionadas[keydownTeclaToLower] = true;
     });
     window.addEventListener('keyup', (e) => {
         const keyupTeclaToLower = e.key.toLowerCase();
-        if (['w', 'a', 's', 'd'].includes(keyupTeclaToLower)) teclasPressionadas[keyupTeclaToLower] = false;
+        if (['w', 'a', 's', 'd'].includes(keyupTeclaToLower))
+            teclasPressionadas[keyupTeclaToLower] = false;
     });
 
     const CTX = (() => {
@@ -57,7 +69,7 @@ function iniciarJogo() {
     // Rage Timer
     setTimeout(() => {
         giddy.setSprite(document.querySelector('img#giddyRage'));
-        giddy.setSpeed(Number.parseInt(giddy.velocity * (1 + RAGE_BUFF_PERCENT/100)));
+        giddy.setSpeed(Number.parseInt(giddy.velocity * (1 + RAGE_BUFF_PERCENT / 100)));
     }, TEMPO_RAGE);
 
     let timestampInicial;
