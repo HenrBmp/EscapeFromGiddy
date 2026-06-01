@@ -6,13 +6,13 @@ import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from './ConstantesViewport.js';
     const contagemContainer = document.querySelector('#contagem');
     const sobreposicaoCarregamento = document.querySelector('#sobreposicaoCarregamento');
 
-    window.addEventListener('load', () => {
+    window.addEventListener('load', function windowLoad() {
         sobreposicaoCarregamento.remove();
         contagemContainer.classList.add('animacao-contagem-regressiva');
 
-        contagemContainer.addEventListener('animationstart', () => {
-            contagemContainer.removeEventListener('animationstart');
-            window.removeEventListener('load');
+        contagemContainer.addEventListener('animationstart', function contagemAnimationStart() {
+            contagemContainer.removeEventListener('animationstart', contagemAnimationStart);
+            window.removeEventListener('load', windowLoad);
             iniciarContagemRegressiva();
         });
     });
