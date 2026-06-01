@@ -1,0 +1,25 @@
+name: Deploy automatico
+
+on:
+  push:
+    branches:
+      -main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubunto-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Conectar ssh e executar git pull
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{secrets.SERVER_IP}}
+          username: ${{secrets.SERVER_USER}}
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          script: |
+            cd EscapeFromGiddy/
+            git pull
+            npm i
