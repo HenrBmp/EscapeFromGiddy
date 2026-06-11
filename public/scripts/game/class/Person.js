@@ -1,4 +1,4 @@
-import { MENOR_LARGURA, VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from './ConstantesViewport.js';
+import { MENOR_LARGURA, VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from '../ConstantesViewport.js';
 
 export default class Person {
     /** @type Number */
@@ -16,7 +16,7 @@ export default class Person {
     /** @type Number */
     #velocity_PixelPorSec;
 
-    /**@type CanvasRenderingContext2D*/
+    /**@type CanvasRenderingContext2D */
     #contextoCanvas;
 
     /** @type HTMLImageElement */
@@ -41,9 +41,14 @@ export default class Person {
         this.#height = newHeight;
     }
 
+    /**
+     * 
+     * @param {Number} xPos 
+     * @param {Number} yPos 
+     */
     setPosition(xPos, yPos) {
         if (typeof xPos !== 'number' || typeof yPos !== 'number') {
-            throw new Error("Os parâmetros devem do tipo 'Number'");
+            throw new Error(`Ambos parâmetros devem ser do tipo Number, recebido ${typeof xPos} e ${typeof yPos}`);
         }
 
         this.#xPositionLeft = xPos;
@@ -73,19 +78,20 @@ export default class Person {
             this.#xPositionLeft = VIEWPORT_WIDTH - this.#width;
 
         if (this.#yPositionTop < 0) this.#yPositionTop = 0;
-        else if (this.yPositionBottom > VIEWPORT_HEIGHT) 
+        else if (this.yPositionBottom > VIEWPORT_HEIGHT)
             this.#yPositionTop = VIEWPORT_HEIGHT - this.#height;
     }
 
     /** @param {HTMLImageElement} newSprite */
     setSprite(newSprite) {
         if (newSprite instanceof HTMLImageElement) this.#sprite = newSprite;
-        else throw new Error("O argumento deve ser do tipo 'HTMLImageElement'");
+        else throw new Error("O argumento deve ser do tipo HTMLImageElement");
     }
 
     /** @param {Number} newSpeed */
     setSpeed(newSpeed) {
-        if (!Number.isInteger(newSpeed)) throw new Error('newSpeed deve ser um inteiro.');
+        if (!Number.isInteger(newSpeed))
+            throw new Error('newSpeed deve ser um inteiro, recebido ' + typeof newSpeed);
         this.#velocity_PixelPorSec = newSpeed;
     }
 
@@ -96,7 +102,7 @@ export default class Person {
      */
     static verificarColisaoPersons(personA, personB) {
         if (!(personA instanceof Person) || !(personB instanceof Person)) {
-            throw new Error("Os argumentos devem ser do tipo 'Person'");
+            throw new Error("Os argumentos devem ser do tipo Person");
         }
 
         const colisaoHorizontal =

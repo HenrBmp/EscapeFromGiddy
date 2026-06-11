@@ -14,7 +14,7 @@ export default function popUpNomeJogador() {
             if (!nomeJogadorEhValido(nomeJogador))
                 window.alert('Seu nome deve ter no mínimo 3 caracteres e no máximo 30.');
 
-            popUp.remove();
+            document.getElementById('popUpContainer').remove();
             localStorage.setItem('nomeJogador', nomeJogador);
 
             resolve(nomeJogador);

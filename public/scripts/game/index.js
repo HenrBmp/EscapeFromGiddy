@@ -1,34 +1,39 @@
 import fimJogoPopUp from './fimJogoPopUp.js';
-import Person from './Person.js';
+import Person from './class/Person.js';
 import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from './ConstantesViewport.js';
 
 (function () {
     const contagemContainer = document.querySelector('#contagem');
     const sobreposicaoCarregamento = document.querySelector('#sobreposicaoCarregamento');
-
-    window.addEventListener('load', function windowLoad() {
-        sobreposicaoCarregamento.remove();
-        contagemContainer.classList.add('animacao-contagem-regressiva');
-
-        contagemContainer.addEventListener('animationstart', function contagemAnimationStart() {
-            contagemContainer.removeEventListener('animationstart', contagemAnimationStart);
-            window.removeEventListener('load', windowLoad);
-            iniciarContagemRegressiva();
-        });
-    });
-
     function iniciarContagemRegressiva() {
         setTimeout(() => {
             contagemContainer.remove();
             iniciarJogo();
         }, 4000);
     }
+
+    window.addEventListener('load', function windowLoad() {
+        sobreposicaoCarregamento.remove();
+        contagemContainer.classList.add('animacao-contagem-regressiva');
+
+        contagemContainer.addEventListener('animationstart', function contagemAnimationStart() {
+            iniciarContagemRegressiva();
+            contagemContainer.removeEventListener('animationstart', contagemAnimationStart);
+            window.removeEventListener('load', windowLoad);
+        });
+    });
 })();
 
 function iniciarJogo() {
     const TEMPO_LIMITE_JOGO = 1.5 * 60 * 1000;
     const TEMPO_RAGE = TEMPO_LIMITE_JOGO * 0.7;
     const RAGE_BUFF_PERCENT = 30;
+    /**
+     * Calcula a pontuação do jogador com base no tempo sobrevivido.
+     * @param {Number} tempoSobrevividoMs Tempo sobrevivido em milissegundos
+     * @returns Pontuação
+     */
+    const calcPontuacao = (tempoSobrevividoMs) => Math.round(tempoSobrevividoMs / 100);
 
     const teclasPressionadas = {};
     window.addEventListener('keydown', (e) => {
@@ -82,7 +87,7 @@ function iniciarJogo() {
 
         const tempoAcabou = timestamp >= timestampInicial + TEMPO_LIMITE_JOGO;
         if (tempoAcabou) {
-            fimJogoPopUp(true, Math.round((timestamp - 4000) / 100));
+            fimJogoPopUp(true, calcPontuacao(timestamp));
             return;
         }
 
@@ -152,7 +157,7 @@ function iniciarJogo() {
 
         const houveGameOver = Person.verificarColisaoPersons(gustin, giddy);
         if (houveGameOver) {
-            fimJogoPopUp(false, Math.round((timestamp - 4000) / 100));
+            fimJogoPopUp(false, calcPontuacao(timestamp));
             return;
         }
 
