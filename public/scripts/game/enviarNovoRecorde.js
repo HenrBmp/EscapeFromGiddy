@@ -1,8 +1,8 @@
 export default function enviarNovoRecorde(novoRecorde) {
     const nomeJogador = localStorage.getItem('nomeJogador');
-    localStorage.setItem('recordeAtual', novoRecorde);
-
     const atrasoAteNovaTentativa = 15 * 1000;
+    
+    localStorage.setItem('recordeAtual', novoRecorde);
 
     function tentarRequisicao() {
         return fetch('/rank', {
@@ -23,7 +23,6 @@ export default function enviarNovoRecorde(novoRecorde) {
                     .catch((error) =>
                         console.error(`Impossível converter resposta em json. ${error}`),
                     );
-                /* Tentar novamente em 'atrasoAteNovaTentativa' segundos */
                 setTimeout(tentarRequisicao, atrasoAteNovaTentativa);
             }
         })

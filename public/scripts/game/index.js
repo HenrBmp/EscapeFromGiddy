@@ -1,6 +1,7 @@
 import fimJogoPopUp from './fimJogoPopUp.js';
-import Person from './class/Person.js';
+import Personagem from './class/Person.js';
 import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from './ConstantesViewport.js';
+import Obstaculo from './class/Obstaculo.js';
 
 (function () {
     const contagemContainer = document.querySelector('#contagem');
@@ -28,6 +29,7 @@ function iniciarJogo() {
     const TEMPO_LIMITE_JOGO = 1.5 * 60 * 1000;
     const TEMPO_RAGE = TEMPO_LIMITE_JOGO * 0.7;
     const RAGE_BUFF_PERCENT = 30;
+    const NUMERO_DE_OBSTACULOS = 10;
     /**
      * Calcula a pontuação do jogador com base no tempo sobrevivido.
      * @param {Number} tempoSobrevividoMs Tempo sobrevivido em milissegundos
@@ -47,6 +49,9 @@ function iniciarJogo() {
             teclasPressionadas[keyupTeclaToLower] = false;
     });
 
+    /** @type Array<Obstaculo> */
+    const obstaculos = [];
+
     const CTX = (() => {
         /** @type HTMLCanvasElement */
         const canva = document.querySelector('#root canvas');
@@ -57,24 +62,36 @@ function iniciarJogo() {
 
     const gustin = (() => {
         const gustinSpriteImg = document.querySelector('img#gustin');
-        return new Person(CTX, gustinSpriteImg, 450);
+        return new Personagem(CTX, gustinSpriteImg, 450);
     })();
 
     const giddy = (() => {
         const giddyNormalSprite = document.querySelector('img#giddyNormal');
-        return new Person(CTX, giddyNormalSprite, 250);
+        return new Personagem(CTX, giddyNormalSprite, 250);
     })();
 
     gustin.setPosition(
         VIEWPORT_WIDTH / 2 - gustin.width / 2,
         VIEWPORT_HEIGHT * 0.9 - gustin.height,
     );
+    gustin.desenhar();
     giddy.setPosition(VIEWPORT_WIDTH / 2 - giddy.width / 2, VIEWPORT_HEIGHT * 0.1);
+    giddy.desenhar();
 
-    // Rage Timer
-    setTimeout(() => {
-        giddy.setSprite(document.querySelector('img#giddyRage'));
-        giddy.setSpeed(Number.parseInt(giddy.velocity * (1 + RAGE_BUFF_PERCENT / 100)));
+    function gerarNovoObstaculo() {
+        const spriteObstaculo = document.querySelector('img#rockObstaculo');
+        const obstaculoGerado = new Obstaculo(CTX, spriteObstaculo);
+        obstaculoGerado.gerarPosicionamentoSeguro([gustin, giddy, ...obstaculos]);
+        obstaculos.push(obstaculoGerado);
+    }
+    setInterval(gerarNovoObstaculo, TEMPO_LIMITE_JOGO / NUMERO_DE_OBSTACULOS);
+
+    setTimeout(function startRage() {
+        const rageSprite = document.querySelector('img#giddyRage');
+        const newSpeed = Number.parseInt(giddy.velocity * (1 + RAGE_BUFF_PERCENT / 100));
+
+        giddy.setSprite(rageSprite);
+        giddy.setSpeed(newSpeed);
     }, TEMPO_RAGE);
 
     let timestampInicial;
@@ -87,6 +104,7 @@ function iniciarJogo() {
 
         const tempoAcabou = timestamp >= timestampInicial + TEMPO_LIMITE_JOGO;
         if (tempoAcabou) {
+            clearInterval(gerarNovoObstaculo);
             fimJogoPopUp(true, calcPontuacao(timestamp));
             return;
         }
@@ -106,11 +124,11 @@ function iniciarJogo() {
             x: 0,
             y: 0,
         };
-        if (aPressionado) multiplicadorDirecaoGustin.x -= 1;
-        if (dPressionado) multiplicadorDirecaoGustin.x += 1;
+        if (aPressionado) multiplicadorDirecaoGustin.x--;
+        if (dPressionado) multiplicadorDirecaoGustin.x++;
 
-        if (wPressionado) multiplicadorDirecaoGustin.y -= 1;
-        if (sPressionado) multiplicadorDirecaoGustin.y += 1;
+        if (wPressionado) multiplicadorDirecaoGustin.y--;
+        if (sPressionado) multiplicadorDirecaoGustin.y++;
 
         const deslocamentoGustin = {
             x:
@@ -124,14 +142,19 @@ function iniciarJogo() {
                 multiplicadorDirecaoGustin.y *
                 decomposicaoDiagonalGustin,
         };
+        gustin.mover(deslocamentoGustin.x, deslocamentoGustin.y);
+
+        // gustin - desfazer movimentacao em caso de colisão com obstaculo
+        if (obstaculos.some((obstaculo) => gustin.colideCom(obstaculo))) {
+            gustin.mover(-deslocamentoGustin.x, -deslocamentoGustin.y);
+        }
 
         // Movimentação do npc
         const diferencaX = gustin.xPositionLeft - giddy.xPositionLeft;
         const diferencaY = gustin.yPositionTop - giddy.yPositionTop;
-        /* Avaliar se é 0 para evitar NaN */
         const multiplicadorDirecaoGiddy = {
-            x: diferencaX === 0 ? 0 : diferencaX / Math.abs(diferencaX),
-            y: diferencaY === 0 ? 0 : diferencaY / Math.abs(diferencaY),
+            x: Math.sign(diferencaX),
+            y: Math.sign(diferencaY),
         };
 
         const decomposicaoDiagonalGiddy =
@@ -149,14 +172,22 @@ function iniciarJogo() {
                 multiplicadorDirecaoGiddy.y *
                 decomposicaoDiagonalGiddy,
         };
+        giddy.mover(deslocamentoGiddy.x, deslocamentoGiddy.y);
+
+        // giddy - desfazer movimentacao em caso de colisão com obstaculo
+        if (obstaculos.some((obstaculo) => giddy.colideCom(obstaculo))) {
+            giddy.mover(-deslocamentoGiddy.x, -deslocamentoGiddy.y);
+        }
 
         // Redesenhar frame
         CTX.clearRect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-        gustin.mover(deslocamentoGustin.x, deslocamentoGustin.y);
-        giddy.mover(deslocamentoGiddy.x, deslocamentoGiddy.y);
+        gustin.desenhar();
+        giddy.desenhar();
+        for (const obstaculo of obstaculos) obstaculo.desenhar();
 
-        const houveGameOver = Person.verificarColisaoPersons(gustin, giddy);
+        const houveGameOver = gustin.colideCom(giddy);
         if (houveGameOver) {
+            clearInterval(gerarNovoObstaculo);
             fimJogoPopUp(false, calcPontuacao(timestamp));
             return;
         }

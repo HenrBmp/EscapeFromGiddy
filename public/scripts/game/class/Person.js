@@ -1,26 +1,9 @@
-import { MENOR_LARGURA, VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from '../ConstantesViewport.js';
+import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from '../ConstantesViewport.js';
+import Entidade from './Entidade.js';
 
-export default class Person {
-    /** @type Number */
-    #xPositionLeft;
-
-    /** @type Number */
-    #yPositionTop;
-
-    /** @type Number */
-    #width;
-
-    /** @type Number */
-    #height;
-
+export default class Personagem extends Entidade {
     /** @type Number */
     #velocity_PixelPorSec;
-
-    /**@type CanvasRenderingContext2D */
-    #contextoCanvas;
-
-    /** @type HTMLImageElement */
-    #sprite;
 
     /**
      * @param {CanvasRenderingContext2D} contextoCanvas
@@ -28,32 +11,9 @@ export default class Person {
      * @param {Number} velocity
      */
     constructor(contextoCanvas, sprite, velocity) {
-        this.#contextoCanvas = contextoCanvas;
-
-        this.setSprite(sprite);
+        super(contextoCanvas, sprite);
         this.setSpeed(velocity);
-
-        const proporcaoSprite = sprite.width / sprite.height;
-        const newHeight = MENOR_LARGURA / 6;
-        const newWidth = proporcaoSprite * newHeight;
-
-        this.#width = newWidth;
-        this.#height = newHeight;
-    }
-
-    /**
-     * 
-     * @param {Number} xPos 
-     * @param {Number} yPos 
-     */
-    setPosition(xPos, yPos) {
-        if (typeof xPos !== 'number' || typeof yPos !== 'number') {
-            throw new Error(`Ambos parâmetros devem ser do tipo Number, recebido ${typeof xPos} e ${typeof yPos}`);
-        }
-
-        this.#xPositionLeft = xPos;
-        this.#yPositionTop = yPos;
-        this.#contextoCanvas.drawImage(this.#sprite, xPos, yPos, this.#width, this.#height);
+        this.gerarDimensoes(6);
     }
 
     /**
@@ -61,31 +21,25 @@ export default class Person {
      * @param {Number} deslocamentoEmY
      */
     mover(deslocamentoEmX, deslocamentoEmY) {
-        this.#xPositionLeft += deslocamentoEmX;
-        this.#yPositionTop += deslocamentoEmY;
+        this.xPositionLeft += deslocamentoEmX;
+        this.yPositionTop += deslocamentoEmY;
 
-        this.verificarColisaoParede();
+        this.evitarColisaoParede();
 
-        this.setPosition(this.#xPositionLeft, this.#yPositionTop);
+        this.setPosition(this.xPositionLeft, this.yPositionTop);
     }
 
     /**
      * Caso haja colisão com a parede, deslocamento é reduzido para manter-se dentro do espaço seguro.
      */
-    verificarColisaoParede() {
-        if (this.#xPositionLeft < 0) this.#xPositionLeft = 0;
+    evitarColisaoParede() {
+        if (this.xPositionLeft < 0) this.xPositionLeft = 0;
         else if (this.xPositionRight > VIEWPORT_WIDTH)
-            this.#xPositionLeft = VIEWPORT_WIDTH - this.#width;
+            this.xPositionLeft = VIEWPORT_WIDTH - this.width;
 
-        if (this.#yPositionTop < 0) this.#yPositionTop = 0;
+        if (this.yPositionTop < 0) this.yPositionTop = 0;
         else if (this.yPositionBottom > VIEWPORT_HEIGHT)
-            this.#yPositionTop = VIEWPORT_HEIGHT - this.#height;
-    }
-
-    /** @param {HTMLImageElement} newSprite */
-    setSprite(newSprite) {
-        if (newSprite instanceof HTMLImageElement) this.#sprite = newSprite;
-        else throw new Error("O argumento deve ser do tipo HTMLImageElement");
+            this.yPositionTop = VIEWPORT_HEIGHT - this.height;
     }
 
     /** @param {Number} newSpeed */
@@ -97,51 +51,18 @@ export default class Person {
 
     /**
      * Verifica a colisão entre 2 personagens.
-     * @param {Person} personA
-     * @param {Person} personB
+     * @param {Personagem} personA
+     * @param {Personagem} personB
      */
     static verificarColisaoPersons(personA, personB) {
-        if (!(personA instanceof Person) || !(personB instanceof Person)) {
-            throw new Error("Os argumentos devem ser do tipo Person");
+        if (!(personA instanceof Personagem) || !(personB instanceof Personagem)) {
+            throw new Error('Os argumentos devem ser do tipo Person');
         }
-
-        const colisaoHorizontal =
-            personA.xPositionLeft < personB.xPositionRight &&
-            personA.xPositionRight > personB.xPositionLeft;
-
-        const colisaoVertical =
-            personA.yPositionTop < personB.yPositionBottom &&
-            personA.yPositionBottom > personB.yPositionTop;
-
-        return colisaoHorizontal && colisaoVertical;
-    }
-
-    // GETTERS
-    get xPositionLeft() {
-        return this.#xPositionLeft;
-    }
-
-    get yPositionTop() {
-        return this.#yPositionTop;
-    }
-
-    get xPositionRight() {
-        return this.#xPositionLeft + this.#width;
-    }
-
-    get yPositionBottom() {
-        return this.#yPositionTop + this.#height;
+        const houveColisao = this.verificarColisaoAABB(personA, personB);
+        return houveColisao;
     }
 
     get velocity() {
         return this.#velocity_PixelPorSec;
-    }
-
-    get width() {
-        return this.#width;
-    }
-
-    get height() {
-        return this.#height;
     }
 }
