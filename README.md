@@ -1,4 +1,4 @@
-<video src="public/media/home-page-video.webm" autoplay loop muted width="100%"></video>
+<video src="escapefromgiddy.alwaysdata.net/public/media/home-page-video.webm" autoplay loop muted width="100%"></video>
 
 # Escape From Giddy
 
@@ -140,7 +140,7 @@ O servidor será iniciado em `http://localhost:8080`.
 ├── public/
 │   ├── pages/                # home.html, game.html, rank.html
 │   ├── scripts/              # Módulos JavaScript
-│   │   ├── game/             # Lógica do jogo (Person, colisão, recorde)
+│   │   ├── game/             # Lógica do jogo (Entidade, colisão, recorde)
 │   │   ├── home/             # Inicialização, pop-up, validação
 │   │   └── rank/             # Consumo da API de ranking
 │   ├── styles/               # CSS por página
