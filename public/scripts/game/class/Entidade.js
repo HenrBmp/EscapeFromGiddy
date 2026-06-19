@@ -75,25 +75,27 @@ export default class Entidade {
     }
 
     /**
-     * Verifica colisão entre a instancia de Obstaculo e uma entidade.
-     * @param {Entidade} entidade Entidade com o qual será verificada a colisão.
+     * Verifica colisão entre a instancia de Obstaculo e uma ou mais entidades.
+     * @param {Array<Entidade>} entidades Entidades com as quais será verificada a colisão.
      * @returns True se houver colisão.
      */
-    colideCom(entidade) {
-        if (!(entidade instanceof Entidade)) {
-            throw new TypeError(
-                `Parâmetro entidade deve ser filha da classe Entidade(Personagem ou Obstaculo), recebido ${typeof entidade}`,
-            );
-        }
-
-        const colideHorizontal =
-            this.xPositionLeft < entidade.xPositionRight &&
-            this.xPositionRight > entidade.xPositionLeft;
-        const colideVertical =
-            this.yPositionBottom > entidade.yPositionTop &&
-            this.yPositionTop < entidade.yPositionBottom;
-
-        return colideHorizontal && colideVertical;
+    colideCom(...entidades) {
+        return entidades.some(entidade => {
+            if (!(entidade instanceof Entidade)) {
+                throw new TypeError(
+                    `Parâmetro entidade deve ser filha da classe Entidade(Personagem ou Obstaculo), recebido ${typeof entidade}`,
+                );
+            }
+    
+            const colideHorizontal =
+                this.xPositionLeft < entidade.xPositionRight &&
+                this.xPositionRight > entidade.xPositionLeft;
+            const colideVertical =
+                this.yPositionBottom > entidade.yPositionTop &&
+                this.yPositionTop < entidade.yPositionBottom;
+    
+            return colideHorizontal && colideVertical;
+        })
     }
 
     /** @param {HTMLImageElement} newSprite */

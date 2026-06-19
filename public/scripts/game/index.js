@@ -29,7 +29,8 @@ function iniciarJogo() {
     const TEMPO_LIMITE_JOGO = 1.5 * 60 * 1000;
     const TEMPO_RAGE = TEMPO_LIMITE_JOGO * 0.7;
     const RAGE_BUFF_PERCENT = 30;
-    const NUMERO_DE_OBSTACULOS = 10;
+    let rage_ativo = false;
+    const NUMERO_MAX_DE_OBSTACULOS = 10;
     /**
      * Calcula a pontuação do jogador com base no tempo sobrevivido.
      * @param {Number} tempoSobrevividoMs Tempo sobrevivido em milissegundos
@@ -84,12 +85,13 @@ function iniciarJogo() {
         obstaculoGerado.gerarPosicionamentoSeguro([gustin, giddy, ...obstaculos]);
         obstaculos.push(obstaculoGerado);
     }
-    setInterval(gerarNovoObstaculo, TEMPO_LIMITE_JOGO / NUMERO_DE_OBSTACULOS);
+    setInterval(gerarNovoObstaculo, TEMPO_LIMITE_JOGO / NUMERO_MAX_DE_OBSTACULOS);
 
     setTimeout(function startRage() {
         const rageSprite = document.querySelector('img#giddyRage');
         const newSpeed = Number.parseInt(giddy.velocity * (1 + RAGE_BUFF_PERCENT / 100));
 
+        rage_ativo = true;
         giddy.setSprite(rageSprite);
         giddy.setSpeed(newSpeed);
     }, TEMPO_RAGE);
@@ -145,7 +147,7 @@ function iniciarJogo() {
         gustin.mover(deslocamentoGustin.x, deslocamentoGustin.y);
 
         // gustin - desfazer movimentacao em caso de colisão com obstaculo
-        if (obstaculos.some((obstaculo) => gustin.colideCom(obstaculo))) {
+        if (gustin.colideCom(...obstaculos)) {
             gustin.mover(-deslocamentoGustin.x, -deslocamentoGustin.y);
         }
 
@@ -174,16 +176,18 @@ function iniciarJogo() {
         };
         giddy.mover(deslocamentoGiddy.x, deslocamentoGiddy.y);
 
-        // giddy - desfazer movimentacao em caso de colisão com obstaculo
-        if (obstaculos.some((obstaculo) => giddy.colideCom(obstaculo))) {
-            giddy.mover(-deslocamentoGiddy.x, -deslocamentoGiddy.y);
+        // giddy - desfazer movimentacao em caso de colisão com obstaculo, rage ignora colisao
+        if (giddy.colideCom(...obstaculos)) {
+            if (!rage_ativo) {
+                giddy.mover(-deslocamentoGiddy.x, -deslocamentoGiddy.y);
+            }
         }
 
         // Redesenhar frame
         CTX.clearRect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        for (const obstaculo of obstaculos) obstaculo.desenhar();
         gustin.desenhar();
         giddy.desenhar();
-        for (const obstaculo of obstaculos) obstaculo.desenhar();
 
         const houveGameOver = gustin.colideCom(giddy);
         if (houveGameOver) {
