@@ -82,8 +82,8 @@ Disponível em: [escapefromgiddy.alwaysdata.net](https://escapefromgiddy.alwaysd
 Pré-requisitos: [Node.js 18+](https://nodejs.org/pt-br/download) e [MySQL 8+](https://dev.mysql.com/downloads/)
 
 ```bash
-git clone <url>
-cd escape_from_diddy
+git clone https://github.com/HenrBmp/EscapeFromGiddy.git
+cd EscapeFromGiddy
 cp .env.example .env
 ```
 
