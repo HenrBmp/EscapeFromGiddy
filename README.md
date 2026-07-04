@@ -1,4 +1,4 @@
-<video src="escapefromgiddy.alwaysdata.net/public/media/home-page-video.webm" autoplay loop muted width="100%"></video>
+[home_page_video.webm](https://github.com/user-attachments/assets/254661fa-b9b0-48bc-9663-52d48c9bf78e)
 
 # Escape From Giddy
 
