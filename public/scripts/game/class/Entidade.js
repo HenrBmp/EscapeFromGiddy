@@ -18,6 +18,9 @@ export default class Entidade {
     /** @type CanvasRenderingContext2D */
     #contextoCanvas;
 
+    /** @type Boolean */
+    possuiEscudo;
+
     constructor(contextoCanvas, sprite) {
         if (!(contextoCanvas instanceof CanvasRenderingContext2D))
             throw new Error(
@@ -26,7 +29,6 @@ export default class Entidade {
         this.#contextoCanvas = contextoCanvas;
 
         this.setSprite(sprite);
-        this.sprite = sprite;
     }
 
     /**
@@ -80,22 +82,24 @@ export default class Entidade {
      * @returns True se houver colisão.
      */
     colideCom(...entidades) {
-        return entidades.some(entidade => {
+        return entidades.some((entidade) => {
             if (!(entidade instanceof Entidade)) {
                 throw new TypeError(
                     `Parâmetro entidade deve ser filha da classe Entidade(Personagem ou Obstaculo), recebido ${typeof entidade}`,
                 );
             }
-    
+
             const colideHorizontal =
                 this.xPositionLeft < entidade.xPositionRight &&
                 this.xPositionRight > entidade.xPositionLeft;
             const colideVertical =
                 this.yPositionBottom > entidade.yPositionTop &&
                 this.yPositionTop < entidade.yPositionBottom;
-    
-            return colideHorizontal && colideVertical;
-        })
+
+            const houveColisao = colideHorizontal && colideVertical;
+
+            return houveColisao;
+        });
     }
 
     /** @param {HTMLImageElement} newSprite */

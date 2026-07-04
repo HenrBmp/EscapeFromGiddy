@@ -12,8 +12,8 @@ export default class Personagem extends Entidade {
      */
     constructor(contextoCanvas, sprite, velocity) {
         super(contextoCanvas, sprite);
-        this.setSpeed(velocity);
-        this.gerarDimensoes(6);
+        this.speed = velocity;
+        this.gerarDimensoes(7);
     }
 
     /**
@@ -43,26 +43,19 @@ export default class Personagem extends Entidade {
     }
 
     /** @param {Number} newSpeed */
-    setSpeed(newSpeed) {
-        if (!Number.isInteger(newSpeed))
-            throw new Error('newSpeed deve ser um inteiro, recebido ' + typeof newSpeed);
+    set speed(newSpeed) {
+        const dontIsNumber = typeof newSpeed !== "number";
+        const isNan = Number.isNaN(newSpeed);
+        const isInfinite = !isFinite(newSpeed);
+        const isNegative = newSpeed < 0;
+        if (dontIsNumber || isNan || isInfinite || isNegative)
+            throw new Error(
+                `newSpeed deve ser um número finito e positivo, recebido ${newSpeed}(${typeof newSpeed})`,
+            );
         this.#velocity_PixelPorSec = newSpeed;
     }
 
-    /**
-     * Verifica a colisão entre 2 personagens.
-     * @param {Personagem} personA
-     * @param {Personagem} personB
-     */
-    static verificarColisaoPersons(personA, personB) {
-        if (!(personA instanceof Personagem) || !(personB instanceof Personagem)) {
-            throw new Error('Os argumentos devem ser do tipo Person');
-        }
-        const houveColisao = this.verificarColisaoAABB(personA, personB);
-        return houveColisao;
-    }
-
-    get velocity() {
+    get speed() {
         return this.#velocity_PixelPorSec;
     }
 }

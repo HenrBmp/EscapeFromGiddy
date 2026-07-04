@@ -1,7 +1,8 @@
 import fimJogoPopUp from './fimJogoPopUp.js';
-import Personagem from './class/Person.js';
+import Personagem from './class/Personagem.js';
 import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from './ConstantesViewport.js';
 import Obstaculo from './class/Obstaculo.js';
+import Buff from './class/Buff.js';
 
 (function () {
     const contagemContainer = document.querySelector('#contagem');
@@ -28,8 +29,9 @@ import Obstaculo from './class/Obstaculo.js';
 function iniciarJogo() {
     const TEMPO_LIMITE_JOGO = 1.5 * 60 * 1000;
     const TEMPO_RAGE = TEMPO_LIMITE_JOGO * 0.7;
+    const INTERVALO_SPAWN_BUFF = 15_000;
     const RAGE_BUFF_PERCENT = 30;
-    let rage_ativo = false;
+    let rageAtivo = false;
     const NUMERO_MAX_DE_OBSTACULOS = 10;
     /**
      * Calcula a pontuação do jogador com base no tempo sobrevivido.
@@ -51,7 +53,10 @@ function iniciarJogo() {
     });
 
     /** @type Array<Obstaculo> */
-    const obstaculos = [];
+    let obstaculos = [];
+
+    /** @type Array<Buff> */
+    const buffs = [];
 
     const CTX = (() => {
         /** @type HTMLCanvasElement */
@@ -79,22 +84,28 @@ function iniciarJogo() {
     giddy.setPosition(VIEWPORT_WIDTH / 2 - giddy.width / 2, VIEWPORT_HEIGHT * 0.1);
     giddy.desenhar();
 
+    function gerarNovoBuff() {
+        const buff = new Buff(CTX);
+        buff.gerarPosicionamentoSeguro(gustin, giddy, ...obstaculos);
+        buffs.push(buff);
+    }
+    setInterval(gerarNovoBuff, INTERVALO_SPAWN_BUFF);
+
     function gerarNovoObstaculo() {
-        const spriteObstaculo = document.querySelector('img#rockObstaculo');
-        const obstaculoGerado = new Obstaculo(CTX, spriteObstaculo);
-        obstaculoGerado.gerarPosicionamentoSeguro([gustin, giddy, ...obstaculos]);
+        const obstaculoGerado = new Obstaculo(CTX);
+        obstaculoGerado.gerarPosicionamentoSeguro(gustin, giddy, ...obstaculos);
         obstaculos.push(obstaculoGerado);
     }
     setInterval(gerarNovoObstaculo, TEMPO_LIMITE_JOGO / NUMERO_MAX_DE_OBSTACULOS);
 
-    setTimeout(function startRage() {
+    function startRage() {
         const rageSprite = document.querySelector('img#giddyRage');
-        const newSpeed = Number.parseInt(giddy.velocity * (1 + RAGE_BUFF_PERCENT / 100));
 
-        rage_ativo = true;
+        rageAtivo = true;
         giddy.setSprite(rageSprite);
-        giddy.setSpeed(newSpeed);
-    }, TEMPO_RAGE);
+        giddy.speed *= 1 + RAGE_BUFF_PERCENT / 100;
+    }
+    setTimeout(startRage, TEMPO_RAGE);
 
     let timestampInicial;
     let timestampAnterior;
@@ -134,21 +145,35 @@ function iniciarJogo() {
 
         const deslocamentoGustin = {
             x:
-                gustin.velocity *
+                gustin.speed *
                 variacaoTempoSegundos *
                 multiplicadorDirecaoGustin.x *
                 decomposicaoDiagonalGustin,
             y:
-                gustin.velocity *
+                gustin.speed *
                 variacaoTempoSegundos *
                 multiplicadorDirecaoGustin.y *
                 decomposicaoDiagonalGustin,
         };
         gustin.mover(deslocamentoGustin.x, deslocamentoGustin.y);
 
-        // gustin - desfazer movimentacao em caso de colisão com obstaculo
-        if (gustin.colideCom(...obstaculos)) {
-            gustin.mover(-deslocamentoGustin.x, -deslocamentoGustin.y);
+        // gustin - desfazer movimentacao em caso de colisão com obstaculo, ou remove-lo se possuir escudo
+        for (const obstaculo of obstaculos) {
+            if (gustin.colideCom(obstaculo)) {
+                if (gustin.possuiEscudo) {
+                    obstaculos = obstaculos.filter(
+                        (obs) =>
+                            obstaculo.xPositionLeft !== obs.xPositionLeft &&
+                            obstaculo.yPositionTop !== obs.yPositionTop,
+                    );
+                } else gustin.mover(-deslocamentoGustin.x, -deslocamentoGustin.y);
+            }
+        }
+        for (const buff of buffs) {
+            if (gustin.colideCom(buff)) {
+                buff.aplicarBuff(gustin);
+                buffs.pop(buff);
+            }
         }
 
         // Movimentação do npc
@@ -164,12 +189,12 @@ function iniciarJogo() {
 
         const deslocamentoGiddy = {
             x:
-                giddy.velocity *
+                giddy.speed *
                 variacaoTempoSegundos *
                 multiplicadorDirecaoGiddy.x *
                 decomposicaoDiagonalGiddy,
             y:
-                giddy.velocity *
+                giddy.speed *
                 variacaoTempoSegundos *
                 multiplicadorDirecaoGiddy.y *
                 decomposicaoDiagonalGiddy,
@@ -177,19 +202,18 @@ function iniciarJogo() {
         giddy.mover(deslocamentoGiddy.x, deslocamentoGiddy.y);
 
         // giddy - desfazer movimentacao em caso de colisão com obstaculo, rage ignora colisao
-        if (giddy.colideCom(...obstaculos)) {
-            if (!rage_ativo) {
-                giddy.mover(-deslocamentoGiddy.x, -deslocamentoGiddy.y);
-            }
+        if (giddy.colideCom(...obstaculos) && !rageAtivo) {
+            giddy.mover(-deslocamentoGiddy.x, -deslocamentoGiddy.y);
         }
 
         // Redesenhar frame
         CTX.clearRect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         for (const obstaculo of obstaculos) obstaculo.desenhar();
+        for (const buff of buffs) buff.desenhar();
         gustin.desenhar();
         giddy.desenhar();
 
-        const houveGameOver = gustin.colideCom(giddy);
+        const houveGameOver = gustin.colideCom(giddy) && !gustin.possuiEscudo;
         if (houveGameOver) {
             clearInterval(gerarNovoObstaculo);
             fimJogoPopUp(false, calcPontuacao(timestamp));

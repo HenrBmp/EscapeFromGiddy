@@ -1,37 +1,11 @@
-import Entidade from './Entidade.js';
-import { VIEWPORT_WIDTH, VIEWPORT_HEIGHT } from '../ConstantesViewport.js';
+import Objeto from './Objeto.js';
 
-export default class Obstaculo extends Entidade {
+export default class Obstaculo extends Objeto {
     /**
      * @param {CanvasRenderingContext2D} contextoCanvas Contexto 2D do canvas do jogo
-     * @param {HTMLImageElement} sprite Elemento <img> com o sprite da entidade
      */
-    constructor(contextoCanvas, sprite) {
+    constructor(contextoCanvas) {
+        const sprite = document.querySelector("img#rockObstaculo");
         super(contextoCanvas, sprite);
-        this.gerarDimensoes(9);
-    }
-
-    /**
-     * Gera uma posicionamente para o obstaculo de forma à não sobrepor outras entidades.
-     * @param {Array<Entidade>} entidadesPresentes Array de objetos filhos de entidade(instâncias de Personagem ou Entidade)
-     *  presentes no jogo, utilizadas para evitar a sobreposição de entidades.
-     */
-    gerarPosicionamentoSeguro(entidadesPresentes = []) {
-        const MAX_WIDTH = VIEWPORT_WIDTH - this.width;
-        const MAX_HEIGHT = VIEWPORT_HEIGHT - this.height;
-
-        let randomXPos;
-        let randomYPos;
-        randomizarPosicoes();
-        
-        for (const entidade of entidadesPresentes) {
-            if (this.colideCom(entidade)) randomizarPosicoes();
-        }
-        
-        this.setPosition(randomXPos, randomYPos);
-        function randomizarPosicoes() {
-            randomXPos = parseFloat(Math.random().toFixed(2)) * MAX_WIDTH;
-            randomYPos = parseFloat(Math.random().toFixed(2)) * MAX_HEIGHT;
-        }
     }
 }
