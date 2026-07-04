@@ -152,8 +152,6 @@ O servidor será iniciado em `http://localhost:8080`.
 
 ## Possíveis Aprimoramentos
 
-- Sistema de power-ups e itens coletáveis no canvas
-- Obstáculos e barreiras no cenário para enriquecer a movimentação
 - Efeitos sonoros e trilha sonora (Web Audio API)
 - Suporte a controles táteis em dispositivos móveis (touch events)
 - Diferentes personagens selecionáveis pelo jogador
