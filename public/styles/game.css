@@ -52,7 +52,7 @@
 #root #game {
     width: 95vw;
     height: 95vh;
-    background: repeat center/64px url('/media/canvasBackground.png');
+    background: repeat center/64px url('/media/canvasBackground.webp');
     border-radius: 12px;
     border: 3px solid black;
     filter: drop-shadow(0 0 6px var(--preto));
